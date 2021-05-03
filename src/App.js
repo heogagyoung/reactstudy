@@ -1,42 +1,55 @@
 import React from "react";
 //import { scryRenderedDOMComponentsWithClass } from "react-dom/test-utils";
 import Proptypes from "prop-types";
-function Food({name,picture,rating}){
-  ////.log(props.fav);
-  console.log(name);
-  return <div>
-    <h2> i like {name} </h2>
-    <h4>{rating}/5.0</h4>
-    <img src = {picture} alt={name}/>
-    </div>
-}
 
-
-
-const foodIlike = [
-{id:1, name: "kimchi",picture :"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Various_kimchi.jpg/220px-Various_kimchi.jpg",rating : 3},
-{id:2, name: "kimchi",picture :"https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Various_kimchi.jpg/220px-Various_kimchi.jpg",rating : 2}
-///{name: "samgubsal",picture:"https://newsimg.sedaily.com/2020/05/19/1Z2T8AAUQM_3.jpg"}
-];
-
-// function renderFood(dish){
-//   console.log(dish);
-//   return <Food key = {dish.id} name ={dish.name} picture = {dish.picture}/>
+// class App extends React.Component{
+//   constructor(props){
+//     super(props);
+//     console.log("hello");
+//   }
+//   state = {
+//     count: 0
+//   };
+//   add = () => {
+//     console.log("Add");
+//     this.setState(current =>({count:this.state.count+1}));
+//   };
+//   minus = () => {
+//     console.log("minus");
+//     this.setState(current =>({count:this.state.count-1}));
+//   };
+//   componentDidMount(){
+//     console.log("component renedered");
+//   }
+//   componentDidUpdate(){
+//     console.log("Update");
+//   }
+//   componentWillUnmount(){
+//     console.log("unmount");
+//   }
+//   render (){
+//     console.log("render");
+//     return <div>
+//       <h1>The number is : {this.state.count}</h1>
+//       <button onClick= {this.add}>Add</button>
+//       <button onClick= {this.minus}>minus</button>
+//     </div> 
+//     //<h1>The number is : {this.state.count}</h1>
+//   }  
 // }
-
-Food.propTypes = {
-  name : Proptypes.string.isRequired,
-  picture : Proptypes.string.isRequired,
-  rating : Proptypes.number.isRequired
-};
-
-function App() {
-  return (
-  <div >
-    {foodIlike.map(dish => (<Food key = {dish.id} name = {dish.name} picture = {dish.picture} rating = {dish.rating}/> ))} 
-    {/*foodIlike.map(renderFood)*/}
-  </div>
-  );
+class App extends React.Component{
+  state = {
+    isLoading : true,
+    movies: []
+  };
+  componentDidMount(){
+    setTimeout(()=> {
+      this.setState({isLoading: false});
+    }, 6000);
+  }
+  render(){
+    const { isLoading} = this.state;
+    return <div>{this.state.isLoading ? "Loading":"We are ready"}</div>;
+  }
 }
-
 export default App;
