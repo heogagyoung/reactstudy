@@ -1,6 +1,9 @@
 import React from "react";
-//import { scryRenderedDOMComponentsWithClass } from "react-dom/test-utils";
+import { scryRenderedDOMComponentsWithClass } from "react-dom/test-utils";
 import Proptypes from "prop-types";
+import axios from "axios";
+import Movie from "./Movie";
+import "./App.css";
 
 // class App extends React.Component{
 //   constructor(props){
@@ -42,14 +45,43 @@ class App extends React.Component{
     isLoading : true,
     movies: []
   };
+  getMovies = async() =>{
+    //const moives = await axios.get("https://yts-proxy.now.sh/list_movies.json");
+    const {
+      data:{
+        data :{movies}
+      }
+    } = await axios.get("https://yts-proxy.now.sh/list_movies.json");
+    console.log(movies);
+    //this.setState({movies:movies}) 
+    this.setState({movies,isLoading:false})
+  }
   componentDidMount(){
-    setTimeout(()=> {
-      this.setState({isLoading: false});
-    }, 6000);
+   this.getMovies();
   }
   render(){
-    const { isLoading} = this.state;
-    return <div>{this.state.isLoading ? "Loading":"We are ready"}</div>;
-  }
+    const { isLoading,movies} = this.state;
+    return (
+    <section className = "container">
+      {this.state.isLoading ? (
+      <div className = "loader">
+        <span className = "loader__text">loading...</span>
+      </div>)
+      :(
+      <div className ="movies">
+        {movies.map(movie => (
+          <Movie 
+          key = {movie.id}
+          id={movie.id} 
+          year={movie.title} 
+          title={movie.title} 
+          summary={movie.summary} 
+          poster={movie.medium_cover_image} 
+          genres = {movie.genres} />
+        ))}
+      </div>
+      )}
+      </section>
+    )}
 }
 export default App;
